@@ -13,6 +13,7 @@ import { Annotation, AnnotatorState } from "@/types/annotation";
 import { ColorShapeForm } from "@/components/ColorShapeForm";
 import { getMockImage, submitBoundingBoxes } from "@/services/api";
 import { toast } from "sonner";
+import AnnotationList from "@/components/AnnotationList";
 
 function Anotate() {
   const anno = useAnnotator<AnnotoriousImageAnnotator>();
@@ -161,37 +162,10 @@ function Anotate() {
         )}
 
         {annotations.length > 0 && (
-          <div className="mt-6">
-            <h2 className="text-xl font-semibold mb-3">Current Annotations</h2>
-            <div className="space-y-2">
-              {annotations.map((ann) => (
-                <div
-                  key={ann.annotate_id}
-                  className="p-3 bg-white rounded shadow-sm flex justify-between items-start"
-                >
-                  <div>
-                    <p>
-                      Color: <span className="font-medium">{ann.color}</span> |
-                      Shape: <span className="font-medium">{ann.shape}</span>
-                    </p>
-                    <p className="text-sm text-gray-600">
-                      Coordinates: ({ann.x_min.toFixed(2)},{" "}
-                      {ann.y_min.toFixed(2)}) to ({ann.x_max.toFixed(2)},{" "}
-                      {ann.y_max.toFixed(2)})
-                    </p>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleAnnotationDelete(ann.annotate_id)}
-                    className="text-red-500 hover:text-red-700 hover:bg-red-50"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
-              ))}
-            </div>
-          </div>
+          <AnnotationList
+            annotations={annotations}
+            onDelete={handleAnnotationDelete}
+          />
         )}
       </div>
     </div>
