@@ -7,7 +7,7 @@ import {
 } from "@annotorious/react";
 import "@annotorious/react/annotorious-react.css";
 import { Button } from "@/components/ui/button";
-import { Loader2, Trash2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
 import { Annotation, AnnotatorState } from "@/types/annotation";
 import { ColorShapeForm } from "@/components/ColorShapeForm";
