@@ -12,6 +12,7 @@ import { Loader2 } from "lucide-react";
 import { BoundingBox, Annotation } from "@/types/annotation";
 import { ColorShapeForm } from "@/components/ColorShapeForm";
 import { getMockImage, submitBoundingBoxes } from "@/services/api";
+import { useToast } from "@/hooks/use-toast";
 
 function Anotate() {
   const anno = useAnnotator<AnnotoriousImageAnnotator>();
@@ -19,17 +20,25 @@ function Anotate() {
   const [imageId, setImageId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [annotations, setAnnotations] = useState<BoundingBox[]>([]);
+  const { toast } = useToast();
 
   const fetchImage = async () => {
     try {
+      if (anno) {
+        anno.clearAnnotations();
+      }
       setIsLoading(true);
-
       const { imageUrl, imageId } = await getMockImage();
       setImageId(imageId);
       setImage(imageUrl);
       setAnnotations([]);
     } catch (error) {
       console.error("Failed to fetch image:", error);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to fetch a new image",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -37,13 +46,17 @@ function Anotate() {
 
   const handleAnnotationSubmit = (data: BoundingBox) => {
     setAnnotations((prev) => [...prev, data]);
-    if (anno) {
-      anno.clearAnnotations();
-    }
   };
 
   const handleFinalSubmit = async () => {
-    if (!imageId || annotations.length === 0) return;
+    if (!imageId || annotations.length === 0) {
+      toast({
+        variant: "destructive",
+        title: "Cannot Submit",
+        description: "Please add at least one annotation",
+      });
+      return;
+    }
 
     const submission: Annotation = {
       image_id: imageId,
@@ -54,35 +67,46 @@ function Anotate() {
       // Replace with your actual API call
       console.log("Submitting annotations:", submission);
       await submitBoundingBoxes(submission);
+      toast({
+        title: "Success",
+        description: `Submitted annotations`,
+      });
       await fetchImage(); // Fetch new image after successful submission
     } catch (error) {
       console.error("Failed to submit annotations:", error);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to submit annotations",
+      });
     }
   };
 
   return (
     <div className="min-h-screen flex justify-center bg-gray-50 p-8">
-      <div className="flex flex-col max-w-4xl  place-items-center">
+      <div className="flex flex-col max-w-4xl  ">
         <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
           Image Annotation Tool
         </h1>
 
         <div className="flex justify-center gap-4 mb-6">
           <Button onClick={fetchImage} disabled={isLoading}>
-            Fetch New Image
+            {isLoading ? (
+              <Loader2 className="animate-spin mr-2" />
+            ) : (
+              "Fetch New Image"
+            )}
           </Button>
           <Button
             onClick={handleFinalSubmit}
             disabled={!annotations.length}
             variant="outline"
           >
-            Submit All Annotations
+            Submit All Annotations ({annotations.length})
           </Button>
         </div>
 
-        {isLoading && <Loader2 className="animate-spin" />}
-
-        {image && !isLoading && (
+        {image && (
           <div className="border rounded-lg overflow-hidden">
             <ImageAnnotator tool="rectangle">
               <img
