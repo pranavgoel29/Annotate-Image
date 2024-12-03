@@ -10,7 +10,6 @@ import {
 import "@annotorious/react/annotorious-react.css";
 import { getMockImage } from "@/services/api";
 import { Button } from "@/components/ui/button";
-import LoadingSpinner from "@/components/icons/LoadingSpinner";
 import { Loader2 } from "lucide-react";
 
 const Annotate = () => {
