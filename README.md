@@ -28,7 +28,7 @@ Used [`annotorious`](https://annotorious.dev) for image annotation.
 
 ## Prerequisites
 
-- Node.js (v20 or later)
+- Node.js (v18.12 or later)
 - pnpm (v6 or later)
 
 <br>
