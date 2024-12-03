@@ -8,6 +8,6 @@ export interface BoundingBox {
 }
 
 export interface Annotation {
-  imageId: string;
-  boxes: BoundingBox[];
+  image_id: string;
+  bboxes: BoundingBox[];
 }

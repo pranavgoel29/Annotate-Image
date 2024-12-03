@@ -1,5 +1,6 @@
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
+import { Annotation } from "@/types/annotation";
 import axios from "axios";
 
 export const getMockImage = async () => {
@@ -13,7 +14,7 @@ export const getMockImage = async () => {
   return { imageId, imageUrl };
 };
 
-export const submitBoundingBoxes = async (data) => {
+export const submitBoundingBoxes = async (data: Annotation) => {
   console.log("Submitting Bounding Boxes:", data);
   return axios.post(`${API_BASE_URL}/submit-bbox`, data);
 };
