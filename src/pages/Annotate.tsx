@@ -74,6 +74,8 @@ function Anotate() {
   };
 
   const handleFinalSubmit = async () => {
+    console.log("Submitting annotations:", annotations);
+    console.log("Image ID:", imageId);
     if (!imageId || annotations.length === 0) {
       toast.info("Please add at least one annotation");
       return;
