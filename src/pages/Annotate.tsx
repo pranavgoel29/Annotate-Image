@@ -61,19 +61,15 @@ function Anotate() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen flex justify-center bg-gray-50 p-8">
+      <div className="flex flex-col max-w-4xl  place-items-center">
         <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
           Image Annotation Tool
         </h1>
 
         <div className="flex justify-center gap-4 mb-6">
           <Button onClick={fetchImage} disabled={isLoading}>
-            {isLoading ? (
-              <Loader2 className="animate-spin mr-2" />
-            ) : (
-              "Fetch New Image"
-            )}
+            Fetch New Image
           </Button>
           <Button
             onClick={handleFinalSubmit}
@@ -84,7 +80,9 @@ function Anotate() {
           </Button>
         </div>
 
-        {image && (
+        {isLoading && <Loader2 className="animate-spin" />}
+
+        {image && !isLoading && (
           <div className="border rounded-lg overflow-hidden">
             <ImageAnnotator tool="rectangle">
               <img
