@@ -13,7 +13,7 @@ import { BoundingBox, Annotation } from "@/types/annotation";
 import { ColorShapeForm } from "@/components/ColorShapeForm";
 import { getMockImage, submitBoundingBoxes } from "@/services/api";
 
-function App() {
+function Anotate() {
   const anno = useAnnotator<AnnotoriousImageAnnotator>();
   const [image, setImage] = useState<string | null>(null);
   const [imageId, setImageId] = useState<string | null>(null);
@@ -126,4 +126,4 @@ function App() {
   );
 }
 
-export default App;
+export default Anotate;
