@@ -32,6 +32,7 @@ const Annotate = () => {
       setIsLoading(false);
     }
   };
+
   useEffect(() => {
     if (anno) {
       // fetch("annotations.json")
@@ -55,10 +56,10 @@ const Annotate = () => {
       <Button onClick={fetchImage} className="mb-3">
         Fetch New Image
       </Button>
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : (
-        image && (
+      <>
+        {isLoading && !image ? (
+          <LoadingSpinner />
+        ) : image ? (
           <>
             <ImageAnnotator tool="rectangle">
               <img
@@ -75,8 +76,8 @@ const Annotate = () => {
               popup={(props: PopupProps) => <div>Hello World</div>}
             />
           </>
-        )
-      )}
+        ) : null}
+      </>
     </div>
   );
 };
