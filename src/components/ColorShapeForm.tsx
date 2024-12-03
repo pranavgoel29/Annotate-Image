@@ -8,6 +8,8 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { PopupProps } from "@annotorious/react";
+import { Trash2 } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 
 interface ColorShapeFormProps extends PopupProps {
   onSubmit: (data: {
@@ -19,9 +21,14 @@ interface ColorShapeFormProps extends PopupProps {
     x_max: number;
     y_max: number;
   }) => void;
+  onDelete?: (id: string) => void;
 }
 
-export function ColorShapeForm({ annotation, onSubmit }: ColorShapeFormProps) {
+export function ColorShapeForm({
+  annotation,
+  onSubmit,
+  onDelete,
+}: ColorShapeFormProps) {
   const [color, setColor] = useState<string>("");
   const [shape, setShape] = useState<string>("");
 
@@ -44,6 +51,16 @@ export function ColorShapeForm({ annotation, onSubmit }: ColorShapeFormProps) {
       x_max: geometry.x + geometry.w,
       y_max: geometry.y + geometry.h,
     });
+  };
+
+  const handleDelete = () => {
+    if (onDelete) {
+      onDelete(annotation.id);
+      toast({
+        title: "Success",
+        description: "Annotation deleted",
+      });
+    }
   };
 
   useEffect(() => {
@@ -81,13 +98,23 @@ export function ColorShapeForm({ annotation, onSubmit }: ColorShapeFormProps) {
         </SelectContent>
       </Select>
 
-      <Button
-        onClick={handleSubmit}
-        disabled={!color || !shape}
-        className="w-full"
-      >
-        Submit
-      </Button>
+      <div className="flex justify-between items-center gap-3">
+        <Button
+          onClick={handleSubmit}
+          disabled={!color || !shape}
+          className="w-full"
+        >
+          Submit
+        </Button>
+        <Button
+          onClick={handleDelete}
+          className="p-4"
+          variant="destructive"
+          size="icon"
+        >
+          <Trash2 className="h-4 w-4" />
+        </Button>
+      </div>
     </div>
   );
 }
