@@ -64,7 +64,6 @@ export function ColorShapeForm({
   };
 
   useEffect(() => {
-    console.log(annotation);
     // Get existing values if annotation was previously labeled
     if (annotation.target.selector?.label) {
       const [existingColor, existingShape] =

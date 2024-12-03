@@ -45,18 +45,29 @@ function Anotate() {
   };
 
   const handleAnnotationSubmit = (data: AnnotatorState) => {
-    // check if annotation already exists and update it
+    // Round the coordinates to ensure they are integers
+    const roundedData = {
+      ...data,
+      x_min: Math.round(data.x_min),
+      y_min: Math.round(data.y_min),
+      x_max: Math.round(data.x_max),
+      y_max: Math.round(data.y_max),
+    };
+
+    // Check if the annotation already exists in the annotations state
     const existingAnnotation = annotations.find(
       (ann) => ann.annotate_id === data.annotate_id
     );
 
     if (existingAnnotation) {
+      // If annotation exists, update it with the rounded values
       const updatedAnnotations = annotations.map((ann) =>
-        ann.annotate_id === data.annotate_id ? data : ann
+        ann.annotate_id === data.annotate_id ? roundedData : ann
       );
       setAnnotations(updatedAnnotations);
     } else {
-      setAnnotations([...annotations, data as AnnotatorState]);
+      // If annotation does not exist, add the new rounded annotation to the list
+      setAnnotations([...annotations, roundedData]);
     }
   };
 
@@ -83,8 +94,6 @@ function Anotate() {
     };
 
     try {
-      // Replace with your actual API call
-      console.log("Submitting annotations:", submission);
       await submitBoundingBoxes(submission);
       toast({
         title: "Success",
