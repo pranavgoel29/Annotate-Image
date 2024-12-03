@@ -7,7 +7,10 @@ export const getMockImage = async () => {
   const response = await axios.get(`${API_BASE_URL}/get-mock-image`, {
     responseType: "blob",
   });
-  const imageId = response.headers["image-id"];
+  // Get the image ID from the response headers, check for both upper and lower case
+  const imageId = response.headers["Image-Id"] ?? response.headers["image-id"];
+  console.log("headers", response.headers);
+  console.log("Image ID:", imageId);
   const imageUrl = URL.createObjectURL(response.data);
   return { imageId, imageUrl };
 };
