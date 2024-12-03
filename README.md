@@ -22,7 +22,7 @@ Tech Stack:
 - Tailwind CSS
 - Vite
 
-Used `annotorious` for image annotation.
+Used [`annotorious`](https://annotorious.dev) for image annotation.
 
 <br>
 
