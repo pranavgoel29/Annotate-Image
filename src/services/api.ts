@@ -9,7 +9,7 @@ export const getMockImage = async () => {
   });
   // Get the image ID from the response headers, check for both upper and lower case
   const imageId = response.headers["Image-Id"] ?? response.headers["image-id"];
-  console.log("headers", response.headers);
+  console.log("headers", response);
   console.log("Image ID:", imageId);
   const imageUrl = URL.createObjectURL(response.data);
   return { imageId, imageUrl };
