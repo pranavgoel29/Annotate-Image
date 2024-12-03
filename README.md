@@ -11,30 +11,60 @@ The Image Annotation Tool is a web application that allows users to annotate ima
 - Save and manage annotations
 - Responsive design for various screen sizes
 
-## Installation
+<br>
 
-To run this project locally, follow these steps:
+## 📦 About Project
 
-1. Clone the repository:
+Tech Stack:
 
-   ```sh
+- React
+- TypeScript
+- Tailwind CSS
+- Vite
+
+Used `annotorious` for image annotation.
+
+<br>
+
+## Prerequisites
+
+- Node.js (v20 or later)
+- pnpm (v6 or later)
+
+<br>
+
+## Getting Started
+
+1. Clone this repository to your local machine:
+
+   ```bash
    git clone https://github.com/pranavgoel29/Image-Annotation-tool.git
+   ```
+
+2. Navigate to the project's directory:
+
+   ```bash
    cd Image-Annotation-tool
    ```
 
-2. Install dependencies:
-
-   ```sh
+3. Install dependencies using pnpm:
+   ```bash
    pnpm install
    ```
 
-3. Start the development server:
+<br>
 
-   ```sh
-   pnpm run dev
-   ```
+## Running the App
 
-4. Open your browser and navigate to `http://localhost:5173`.
+To run the app in development mode, use the following command:
+
+```bash
+pnpm run dev
+```
+
+This command will start the Vite development server and compile your React app. Open your browser and navigate to `http://localhost:5173`.
+
+<br>
 
 ## Usage
 
@@ -44,12 +74,16 @@ To run this project locally, follow these steps:
 4. Manage your annotations through the provided interface.
 5. Submit annotations by clicking `Submit All Annotations`.
 
-## Contributing
+<br>
 
-Contributions are welcome! Please follow these steps to contribute:
+## Future Goals
 
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature/your-feature`).
-3. Commit your changes (`git commit -m 'Add some feature'`).
-4. Push to the branch (`git push origin feature/your-feature`).
-5. Open a pull request.
+- Add support for more annotation shapes (e.g., circles, polygons)
+- Add export functionality to download annotated images
+- Improve the UI/UX for a better user experience
+
+<br>
+
+## 🐛 Bug Reporting
+
+Feel free to [open an issue](https://github.com/pranavgoel29/Image-Annotation-tool/issues) on GitHub if you find any bug.
