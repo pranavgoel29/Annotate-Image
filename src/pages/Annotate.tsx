@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AnnotoriousImageAnnotator,
   ImageAnnotationPopup,
@@ -93,6 +93,18 @@ function Anotate() {
       });
     }
   };
+
+  useEffect(() => {
+    if (anno) {
+      // Configure annotation style
+      anno.setDrawingTool("rectangle");
+      anno.setStyle({
+        fill: "#503f3f00",
+        stroke: "#ff0000",
+        strokeWidth: 2,
+      });
+    }
+  }, [anno]);
 
   return (
     <div className="min-h-screen flex justify-center bg-gray-50 p-8">
