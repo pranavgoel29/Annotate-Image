@@ -9,7 +9,7 @@ import "@annotorious/react/annotorious-react.css";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 
-import { BoundingBox, Annotation } from "@/types/annotation";
+import { Annotation, AnnotatorState } from "@/types/annotation";
 import { ColorShapeForm } from "@/components/ColorShapeForm";
 import { getMockImage, submitBoundingBoxes } from "@/services/api";
 import { useToast } from "@/hooks/use-toast";
@@ -19,7 +19,7 @@ function Anotate() {
   const [image, setImage] = useState<string | null>(null);
   const [imageId, setImageId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [annotations, setAnnotations] = useState<BoundingBox[]>([]);
+  const [annotations, setAnnotations] = useState<AnnotatorState[]>([]);
   const { toast } = useToast();
 
   const fetchImage = async () => {
@@ -44,8 +44,20 @@ function Anotate() {
     }
   };
 
-  const handleAnnotationSubmit = (data: BoundingBox) => {
-    setAnnotations((prev) => [...prev, data]);
+  const handleAnnotationSubmit = (data: AnnotatorState) => {
+    // check if annotation already exists and update it
+    const existingAnnotation = annotations.find(
+      (ann) => ann.annotate_id === data.annotate_id
+    );
+
+    if (existingAnnotation) {
+      const updatedAnnotations = annotations.map((ann) =>
+        ann.annotate_id === data.annotate_id ? data : ann
+      );
+      setAnnotations(updatedAnnotations);
+    } else {
+      setAnnotations([...annotations, data as AnnotatorState]);
+    }
   };
 
   const handleFinalSubmit = async () => {

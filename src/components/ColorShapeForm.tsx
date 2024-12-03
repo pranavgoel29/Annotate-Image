@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -11,6 +11,7 @@ import { PopupProps } from "@annotorious/react";
 
 interface ColorShapeFormProps extends PopupProps {
   onSubmit: (data: {
+    annotate_id: string;
     color: string;
     shape: string;
     x_min: number;
@@ -29,7 +30,13 @@ export function ColorShapeForm({ annotation, onSubmit }: ColorShapeFormProps) {
 
     const geometry = annotation.target.selector.geometry;
 
+    // Update the annotation label
+    if (annotation.target.selector) {
+      annotation.target.selector.label = `${color} ${shape}`;
+    }
+
     onSubmit({
+      annotate_id: annotation.id,
       color,
       shape,
       x_min: geometry.x,
@@ -38,6 +45,17 @@ export function ColorShapeForm({ annotation, onSubmit }: ColorShapeFormProps) {
       y_max: geometry.y + geometry.h,
     });
   };
+
+  useEffect(() => {
+    console.log(annotation);
+    // Get existing values if annotation was previously labeled
+    if (annotation.target.selector?.label) {
+      const [existingColor, existingShape] =
+        annotation.target.selector.label.split(" ");
+      setColor(existingColor);
+      setShape(existingShape);
+    }
+  }, [annotation]);
 
   return (
     <div className="bg-white p-4 rounded-lg shadow-lg space-y-4 min-w-[200px]">

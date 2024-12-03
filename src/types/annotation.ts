@@ -7,6 +7,10 @@ export interface BoundingBox {
   shape: string;
 }
 
+export interface AnnotatorState extends BoundingBox {
+  annotate_id: string;
+}
+
 export interface Annotation {
   image_id: string;
   bboxes: BoundingBox[];
