@@ -68,11 +68,31 @@ This command will start the Vite development server and compile your React app. 
 
 ## Usage
 
-1. Click on the `Fetch New Image` button to load a new image.
-2. Use the annotation tool to draw rectangles on the image.
-3. Save your annotations by clicking the `Submit` button.
-4. Manage your annotations through the provided interface.
-5. Submit annotations by clicking `Submit All Annotations`.
+<blockquote><b><i>Click on the `Fetch New Image` button to load a new image.</i></b></blockquote>
+   
+   ![Newly fetched image](./src/assets/newly_fetched_image.png)
+
+<br>
+
+<blockquote><b><i>Use the annotation tool to draw rectangles on the image.</i></b></blockquote>
+
+![Annotation tool with custom popup](./src/assets/annotation_tool_use.png)
+
+<br>
+
+<blockquote><b><i>Save your annotations by clicking the `Submit` button.</i></b></blockquote>
+
+![Submitted annotation list](./src/assets/annotation_list.png)
+
+<br>
+
+<blockquote><b><i>Manage your annotations through the provided interface.</i></b></blockquote>
+
+![annotation deletion snap](./src/assets/deleting_annotaton.png)
+
+<br>
+
+<b>Submit annotations by clicking `Submit All Annotations`.</b>
 
 <br>
 
