@@ -79,6 +79,9 @@ function Anotate() {
     if (annotations.length === 0) {
       toast.info("Please add at least one annotation");
       return;
+    } else if (annotations.length > 3) {
+      toast.error("Please add at most 3 annotations");
+      return;
     } else if (!imageId) {
       toast.error("Failed to submit annotations: Image ID not found");
       return;
