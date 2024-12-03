@@ -1,4 +1,3 @@
-import { Box } from "./AnnotationCanvas";
 import { useState, useEffect } from "react";
 import {
   Select,
@@ -8,15 +7,16 @@ import {
   SelectValue,
 } from "./ui/select";
 import { Button } from "./ui/button";
+import { BoundingBox } from "@/types/annotation";
 
 export const AnnotationForm = ({
   boxes,
   onSubmit,
 }: {
-  boxes: Box[];
-  onSubmit: (labels: Box[]) => void;
+  boxes: BoundingBox[];
+  onSubmit: (labels: BoundingBox[]) => void;
 }) => {
-  const [labels, setLabels] = useState<Box[]>(boxes);
+  const [labels, setLabels] = useState<BoundingBox[]>(boxes);
 
   useEffect(() => {
     setLabels(boxes);
@@ -46,7 +46,7 @@ export const AnnotationForm = ({
   return (
     <div className="p-4 space-y-4">
       <h2 className="text-lg font-bold">Assign Labels</h2>
-      {labels.map((box, i) => (
+      {labels.map((_, i) => (
         <div key={i} className="flex space-x-4">
           {/* Select for Color */}
           <Select

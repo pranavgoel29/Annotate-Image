@@ -1,10 +1,10 @@
 export interface BoundingBox {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  color?: string;
-  shape?: string;
+  x_min: number;
+  y_min: number;
+  x_max: number;
+  y_max: number;
+  color: string;
+  shape: string;
 }
 
 export interface Annotation {
