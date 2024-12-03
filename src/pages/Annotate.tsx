@@ -9,7 +9,7 @@ import {
 } from "@annotorious/react";
 import "@annotorious/react/annotorious-react.css";
 import { getMockImage } from "@/services/api";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import LoadingSpinner from "@/components/icons/LoadingSpinner";
 
 const Annotate = () => {
