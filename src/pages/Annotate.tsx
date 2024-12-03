@@ -1,85 +1,129 @@
-import { useEffect, useState } from "react";
-
+import { useState } from "react";
 import {
   AnnotoriousImageAnnotator,
   ImageAnnotationPopup,
   ImageAnnotator,
-  PopupProps,
   useAnnotator,
 } from "@annotorious/react";
 import "@annotorious/react/annotorious-react.css";
-import { getMockImage } from "@/services/api";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 
-const Annotate = () => {
+import { BoundingBox, Annotation } from "@/types/annotation";
+import { ColorShapeForm } from "@/components/ColorShapeForm";
+import { getMockImage, submitBoundingBoxes } from "@/services/api";
+
+function App() {
   const anno = useAnnotator<AnnotoriousImageAnnotator>();
   const [image, setImage] = useState<string | null>(null);
-  const [image_id, setImage_id] = useState<string | null>(null);
-
+  const [imageId, setImageId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [annotations, setAnnotations] = useState<BoundingBox[]>([]);
 
   const fetchImage = async () => {
     try {
       setIsLoading(true);
+
       const { imageUrl, imageId } = await getMockImage();
-      setImage_id(imageId);
+      setImageId(imageId);
       setImage(imageUrl);
+      setAnnotations([]);
     } catch (error) {
       console.error("Failed to fetch image:", error);
-      alert("Failed to fetch a new image.");
     } finally {
       setIsLoading(false);
     }
   };
 
-  useEffect(() => {
+  const handleAnnotationSubmit = (data: BoundingBox) => {
+    setAnnotations((prev) => [...prev, data]);
     if (anno) {
-      // fetch("annotations.json")
-      //   .then((response) => response.json())
-      //   .then((annotations) => {
-      //     anno.setAnnotations(annotations);
-      //   });
+      anno.clearAnnotations();
     }
-  }, [anno]);
+  };
 
-  // const handleSubmit = async (labels: any[]) => {
-  //   await submitBoundingBoxes({ image_id: image_id, bboxes: labels });
-  //   alert("Annotations submitted!");
+  const handleFinalSubmit = async () => {
+    if (!imageId || annotations.length === 0) return;
 
-  //   fetchImage();
-  // };
+    const submission: Annotation = {
+      image_id: imageId,
+      bboxes: annotations,
+    };
+
+    try {
+      // Replace with your actual API call
+      console.log("Submitting annotations:", submission);
+      await submitBoundingBoxes(submission);
+      await fetchImage(); // Fetch new image after successful submission
+    } catch (error) {
+      console.error("Failed to submit annotations:", error);
+    }
+  };
 
   return (
-    <div className="flex flex-col items-center p-11">
-      <h1 className="text-3xl font-bold mb-5">Annotate Images</h1>
-      <Button onClick={fetchImage} className="mb-3">
-        Fetch New Image
-      </Button>
-      <>
-        {isLoading && !image ? (
-          <Loader2 className="animate-spin w-10 h-10 " />
-        ) : image ? (
-          <>
+    <div className="min-h-screen bg-gray-50 p-8">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
+          Image Annotation Tool
+        </h1>
+
+        <div className="flex justify-center gap-4 mb-6">
+          <Button onClick={fetchImage} disabled={isLoading}>
+            {isLoading ? (
+              <Loader2 className="animate-spin mr-2" />
+            ) : (
+              "Fetch New Image"
+            )}
+          </Button>
+          <Button
+            onClick={handleFinalSubmit}
+            disabled={!annotations.length}
+            variant="outline"
+          >
+            Submit All Annotations
+          </Button>
+        </div>
+
+        {image && (
+          <div className="border rounded-lg overflow-hidden">
             <ImageAnnotator tool="rectangle">
               <img
-                className="border-4 border-orange-200"
                 src={image}
-                id={image_id}
-                width={500}
-                height={700}
-                alt="Annotated"
+                alt="Annotate this"
+                className="max-w-full h-auto"
               />
             </ImageAnnotator>
 
             <ImageAnnotationPopup
-              popup={(props: PopupProps) => <div>Hello World</div>}
+              popup={(props) => (
+                <ColorShapeForm {...props} onSubmit={handleAnnotationSubmit} />
+              )}
             />
-          </>
-        ) : null}
-      </>
+          </div>
+        )}
+
+        {annotations.length > 0 && (
+          <div className="mt-6">
+            <h2 className="text-xl font-semibold mb-3">Current Annotations</h2>
+            <div className="space-y-2">
+              {annotations.map((ann, idx) => (
+                <div key={idx} className="p-3 bg-gray-50 rounded">
+                  <p>
+                    Color: <span className="font-medium">{ann.color}</span> |
+                    Shape: <span className="font-medium">{ann.shape}</span>
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    Coordinates: ({ann.x_min.toFixed(2)}, {ann.y_min.toFixed(2)}
+                    ) to ({ann.x_max.toFixed(2)}, {ann.y_max.toFixed(2)})
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
-};
+}
 
-export default Annotate;
+export default App;
