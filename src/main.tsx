@@ -3,14 +3,14 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import { Annotorious } from "@annotorious/react";
-import { Toaster } from "./components/ui/toaster.tsx";
+import { Toaster } from "sonner";
 
 const rootElement = document.getElementById("root");
 if (rootElement) {
   createRoot(rootElement).render(
     <StrictMode>
       <Annotorious>
-        <Toaster />
+        <Toaster richColors />
         <App />
       </Annotorious>
     </StrictMode>

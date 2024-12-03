@@ -12,7 +12,7 @@ import { Loader2, Trash2 } from "lucide-react";
 import { Annotation, AnnotatorState } from "@/types/annotation";
 import { ColorShapeForm } from "@/components/ColorShapeForm";
 import { getMockImage, submitBoundingBoxes } from "@/services/api";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 function Anotate() {
   const anno = useAnnotator<AnnotoriousImageAnnotator>();
@@ -20,7 +20,6 @@ function Anotate() {
   const [imageId, setImageId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [annotations, setAnnotations] = useState<AnnotatorState[]>([]);
-  const { toast } = useToast();
 
   const fetchImage = async () => {
     try {
@@ -34,11 +33,7 @@ function Anotate() {
       setAnnotations([]);
     } catch (error) {
       console.error("Failed to fetch image:", error);
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Failed to fetch a new image",
-      });
+      toast.error("Failed to fetch a new image");
     } finally {
       setIsLoading(false);
     }
@@ -80,11 +75,7 @@ function Anotate() {
 
   const handleFinalSubmit = async () => {
     if (!imageId || annotations.length === 0) {
-      toast({
-        variant: "destructive",
-        title: "Cannot Submit",
-        description: "Please add at least one annotation",
-      });
+      toast.info("Please add at least one annotation");
       return;
     }
 
@@ -95,18 +86,11 @@ function Anotate() {
 
     try {
       await submitBoundingBoxes(submission);
-      toast({
-        title: "Success",
-        description: `Submitted annotations`,
-      });
+      toast.success("Submitted annotations");
       await fetchImage(); // Fetch new image after successful submission
     } catch (error) {
       console.error("Failed to submit annotations:", error);
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Failed to submit annotations",
-      });
+      toast.error("Failed to submit annotations");
     }
   };
 
@@ -132,7 +116,7 @@ function Anotate() {
         <div className="flex justify-center gap-4 mb-6">
           <Button onClick={fetchImage} disabled={isLoading}>
             {isLoading ? (
-              <Loader2 className="animate-spin mr-2" />
+              <Loader2 className="animate-spin" />
             ) : (
               "Fetch New Image"
             )}

@@ -9,7 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { PopupProps } from "@annotorious/react";
 import { Trash2 } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 interface ColorShapeFormProps extends PopupProps {
   onSubmit: (data: {
@@ -56,10 +56,7 @@ export function ColorShapeForm({
   const handleDelete = () => {
     if (onDelete) {
       onDelete(annotation.id);
-      toast({
-        title: "Success",
-        description: "Annotation deleted",
-      });
+      toast.success("Annotation deleted");
     }
   };
 
