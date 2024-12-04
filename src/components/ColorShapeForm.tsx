@@ -46,10 +46,10 @@ export function ColorShapeForm({
       annotate_id: annotation.id,
       color,
       shape,
-      x_min: geometry.x,
-      y_min: geometry.y,
-      x_max: geometry.x + geometry.w,
-      y_max: geometry.y + geometry.h,
+      x_min: geometry.bounds.minX,
+      y_min: geometry.bounds.minY,
+      x_max: geometry.bounds.maxX,
+      y_max: geometry.bounds.maxY,
     });
   };
 
