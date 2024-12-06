@@ -9,7 +9,7 @@ import "@annotorious/react/annotorious-react.css";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 
-import { Annotation, AnnotatorState } from "@/types/annotation";
+import { Annotation, AnnotatorState, BoundingBox } from "@/types/annotation";
 import { ColorShapeForm } from "@/components/ColorShapeForm";
 import { getMockImage, submitBoundingBoxes } from "@/services/api";
 import { toast } from "sonner";
@@ -90,7 +90,9 @@ function Anotate() {
 
     const submission: Annotation = {
       image_id: imageId,
-      bboxes: annotations,
+
+      // Taking out the annotate_id from the annotations
+      bboxes: annotations.map(({ annotate_id, ...bbox }): BoundingBox => bbox),
     };
 
     try {
