@@ -99,12 +99,13 @@ This command will start the Vite development server and compile your React app. 
 
 <br>
 
-## Future Goals
+## Future Goals 
 
 - Add support for more annotation shapes (e.g., circles, polygons)
 - Add export functionality to download annotated images
 - Improve the UI/UX for a better user experience
 
+[Dev branch deployment](https://annotate-image-preview.vercel.app/)
 <br>
 
 ## 🐛 Bug Reporting
