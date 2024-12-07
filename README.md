@@ -1,8 +1,10 @@
+<img src="./src/assets/icon.png" alt="logo" width="15%" />
+
 # Image Annotation Tool
 
-![Screenshot of the website with annotation popup being visible](./src/assets/preview.png)
-
 The Image Annotation Tool is a web application that allows users to annotate images with various shapes and labels. This tool is useful for tasks such as labeling datasets for machine learning, creating visual notes, or any other purpose that requires image annotation.
+
+![Screenshot of the website with annotation popup being visible](./src/assets/preview.png)
 
 ## Features
 
