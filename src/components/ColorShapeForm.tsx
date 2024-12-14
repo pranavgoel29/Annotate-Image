@@ -12,7 +12,7 @@ import { Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 interface ColorShapeFormProps extends PopupProps {
-  onSubmit: (data: {
+  readonly onSubmit: (data: {
     annotate_id: string;
     color: string;
     shape: string;
@@ -21,7 +21,7 @@ interface ColorShapeFormProps extends PopupProps {
     x_max: number;
     y_max: number;
   }) => void;
-  onDelete?: (id: string) => void;
+  readonly onDelete?: (id: string) => void;
 }
 
 export function ColorShapeForm({
