@@ -90,7 +90,7 @@ function Anotate() {
 
     const submission: Annotation = {
       image_id: imageId,
-      
+
       // Taking out the annotate_id from the annotations
       bboxes: annotations.map(({ annotate_id, ...bbox }): BoundingBox => bbox), // eslint-disable-line
     };
