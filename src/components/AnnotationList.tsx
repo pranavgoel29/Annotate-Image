@@ -23,8 +23,8 @@ const AnnotationList = ({ annotations, onDelete }: AnnotationListProps) => {
                 <span className="font-medium">{ann.shape}</span>
               </p>
               <p className="text-sm text-gray-600">
-                Coordinates: ({ann.x_min.toFixed(2)}, {ann.y_min.toFixed(2)}) to
-                ({ann.x_max.toFixed(2)}, {ann.y_max.toFixed(2)})
+                Coordinates: ({ann.x_min}, {ann.y_min}) to ({ann.x_max},{" "}
+                {ann.y_max})
               </p>
             </div>
             <Button
